@@ -1,36 +1,45 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MoodAnalyzer;
+using System;
 
 namespace MoodAnalyzerTest
 {
     [TestClass]
-    public class AnalyzeTes
+    public class UnitTest1
     {
         [TestMethod]
-        public void ForSadMoodShouldReturnSad()
+        public void TestNullMessage()
         {
-            //Arrange
-            string expected = "SAD";
-            string message = "I am in Sad Mood";
-            MoodAnalyse moodAnalyzer = new MoodAnalyse(message);
-
-            //Act
-            string mood = moodAnalyzer.AnalyseMood();
-
+            string actual;
+            try
+            {
+                //Arrange
+                MoodAnalyser mood = new MoodAnalyser(null);
+                //Act
+                actual = mood.AnalyseMood();
+            }
+            catch (MoodAnalyserCustomException e)
+            {
+                actual = e.Message;
+            }
             //Assert
-            Assert.AreEqual(expected, mood);
+            Assert.AreNotEqual("Happy Mood", actual);
         }
         [TestMethod]
-        [DataRow(null)]
-        public void GivenHappyMoodShouldReturnHappy(string message)
+        public void TestHappyMessage()
         {
-            //Arrange
-            string expected = "HAPPY";
-            MoodAnalyse moodAnalyzer = new MoodAnalyse(message);
-            //Act
-            string mood = moodAnalyzer.AnalyseMood();
-            //Assert
-            Assert.AreEqual(expected, mood);
+            MoodAnalyser mood = new MoodAnalyser("I am in Happy Mood right now");
+            string actual = mood.AnalyseMood();
+            Assert.AreEqual("Happy Mood", actual);
         }
+
+        [TestMethod]
+        public void TestSadMessage()
+        {
+            MoodAnalyser mood = new MoodAnalyser("I am in Sad Mood right now");
+            string actual = mood.AnalyseMood();
+            Assert.AreEqual("Sad Mood", actual);
+        }
+
     }
 }
