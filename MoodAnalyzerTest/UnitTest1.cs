@@ -19,7 +19,18 @@ namespace MoodAnalyzerTest
 
             //Assert
             Assert.AreEqual(expected, mood);
-
+        }
+        [TestMethod]
+        [DataRow(null)]
+        public void GivenHappyMoodShouldReturnHappy(string message)
+        {
+            //Arrange
+            string expected = "HAPPY";
+            MoodAnalyse moodAnalyzer = new MoodAnalyse(message);
+            //Act
+            string mood = moodAnalyzer.AnalyseMood();
+            //Assert
+            Assert.AreEqual(expected, mood);
         }
     }
 }
