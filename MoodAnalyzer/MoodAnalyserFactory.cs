@@ -8,27 +8,27 @@ namespace MoodAnalyzer
 {
     public class MoodAnalyserFactory
     {
-        public static object CreateMoodAnalyser(string className, string constructor)
+        public static object CreateMoodAnalyser(string className, string constructor, string message)
         {
-            string pattern = @"."+constructor+"$";
-            if (Regex.IsMatch(className, pattern))
+            Type type = Type.GetType("MoodAnalyzer.MoodAnalyser");
+            if(type.FullName.Equals(className) || type.Name.Equals(className))
             {
-                try
+                if (type.Name.Equals(constructor))
                 {
-                    //Assembly assembly = Assembly.GetExecutingAssembly();
-                    //Type moodAnalyseType = assembly.GetType(className);
-                    Type moodAnalyseType = Type.GetType(className);
-                    return Activator.CreateInstance(moodAnalyseType);
+                    ConstructorInfo constructorInfo = type.GetConstructor(new [] { typeof(string) });
+                    object instance = constructorInfo.Invoke(new object[] { message });
+                    return instance;
                 }
-                catch (MoodAnalyserCustomException)
+                else
                 {
-                    throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_CLASS,"Class Name not found");
+                    throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_METHOD, "Constructor Name not found");
                 }
             }
             else
             {
-                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_METHOD,"Constructor Name not found");
+                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_CLASS, "Class Name not found");
             }
+
         }
     }
 }
