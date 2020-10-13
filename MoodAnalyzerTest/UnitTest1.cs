@@ -25,6 +25,23 @@ namespace MoodAnalyzerTest
             //Assert
             Assert.AreNotEqual("Happy Mood", actual);
         }
+
+        [TestMethod]
+        public void TestEmptyMessage()
+        {
+            MoodAnalyser mood = new MoodAnalyser(string.Empty);
+            string actual;
+            try
+            {
+                actual = mood.AnalyseMood();
+            }
+            catch(MoodAnalyserCustomException e)
+            {
+                actual = e.Message;
+            }
+            Assert.AreEqual("String shouldn't be empty", actual);
+        }
+
         [TestMethod]
         public void TestHappyMessage()
         {
@@ -41,5 +58,12 @@ namespace MoodAnalyzerTest
             Assert.AreEqual("Sad Mood", actual);
         }
 
+        [TestMethod]
+        public void GivenMoodAnalyserClassNameShouldReturn_MoodAnalyserObject()
+        {
+            MoodAnalyser expected = new MoodAnalyser();
+            object actual = MoodAnalyserFactory.CreateMoodAnalyser("MoodAnalyzer.MoodAnalyser","MoodAnalyser");
+            expected.Equals(actual);
+        }
     }
 }
