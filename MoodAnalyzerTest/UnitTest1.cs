@@ -99,5 +99,24 @@ namespace MoodAnalyzerTest
                 Assert.AreEqual(expected,actual);
             }
         }
+
+        [TestMethod]
+        public void TestingReflectionToChangeMoodMessageDynamically()
+        {
+            string expected = "Happy";
+            string actual = "";
+            try
+            {
+                actual = MoodAnalyserFactory.SetField("message","Happy");
+            }
+            catch(MoodAnalyserCustomException m)
+            {
+                actual = m.Message;
+            }
+            finally
+            {
+                Assert.AreEqual(expected,actual);
+            }
+        }
     }
 }

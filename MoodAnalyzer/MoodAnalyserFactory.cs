@@ -47,5 +47,26 @@ namespace MoodAnalyzer
             }
         }
 
+        public static string SetField(string fieldName, string message)
+        {
+            try
+            {
+                if (message == null)
+                {
+                    throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_FIELD,"Message can't be null");
+                }
+                MoodAnalyser moodAnalyser = new MoodAnalyser();
+                Type type = Type.GetType("MoodAnalyzer.MoodAnalyser");
+                //Create FieldInfo obj by defining fieldname & declare it as public and instance variable
+                FieldInfo field = type.GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
+                field.SetValue(moodAnalyser,message);
+                return moodAnalyser.message;  //Here, message is the variable of MoodAnalyse class
+            }
+            catch (Exception)
+            {
+                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_FIELD,"Mentioned Field isn't there");
+            }
+        }
+
     }
 }
