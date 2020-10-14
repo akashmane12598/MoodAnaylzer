@@ -15,9 +15,9 @@ namespace MoodAnalyzer
             {
                 try
                 {
-                    //Assembly assembly = Assembly.GetExecutingAssembly();
+                    Assembly assembly = Assembly.GetExecutingAssembly();
                     //Type moodAnalyseType = assembly.GetType(className);
-                    Type moodAnalyseType = Type.GetType(className);
+                    Type moodAnalyseType = assembly.GetType(className);
                     return Activator.CreateInstance(moodAnalyseType);
                 }
                 catch (MoodAnalyserCustomException)
