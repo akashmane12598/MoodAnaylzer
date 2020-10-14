@@ -58,12 +58,58 @@ namespace MoodAnalyzerTest
             Assert.AreEqual("Sad Mood", actual);
         }
 
+        //TC4
         [TestMethod]
-        public void GivenMoodAnalyserClassNameShouldReturn_MoodAnalyserObject()
+        public void GivenMoodAnalyserClassNameShouldReturn_MoodAnalyserObject_TC4()
         {
             MoodAnalyser expected = new MoodAnalyser();
             object actual = MoodAnalyserFactory.CreateMoodAnalyser("MoodAnalyzer.MoodAnalyser","MoodAnalyser");
             expected.Equals(actual);
         }
+
+        //TC4.1 Improper class name
+        [TestMethod]
+        public void GivenMoodAnalyserClassNameShouldReturn_MoodAnalyserObject_TC_4_1()
+        {
+            object expected=null;
+            object actual =null;
+            try
+            {
+                expected = new MoodAnalyser();
+                actual = MoodAnalyserFactory.CreateMoodAnalyser("ModAnalyzer.MoodAnalyser", "MoodAnalyser");                
+            }
+            catch (MoodAnalyserCustomException m)
+            {
+                Console.WriteLine(m.Message);           
+            }
+            finally
+            {
+                expected.Equals(actual);
+            }
+            
+        }
+
+        //TC4.2 Improper constructor name
+        [TestMethod]
+        public void GivenMoodAnalyserClassNameShouldReturn_MoodAnalyserObject_TC_4_2()
+        {
+            object expected = null;
+            object actual = null;
+            try
+            {
+                expected = new MoodAnalyser();
+                actual = MoodAnalyserFactory.CreateMoodAnalyser("MoodAnalyzer.MoodAnalyser", "ModAnalyser");
+            }
+            catch (MoodAnalyserCustomException m)
+            {
+                Console.WriteLine(m.Message);
+            }
+            finally
+            {
+                expected.Equals(actual);
+            }
+
+        }
+
     }
 }

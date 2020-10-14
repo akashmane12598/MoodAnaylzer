@@ -20,7 +20,7 @@ namespace MoodAnalyzer
                     Type moodAnalyseType = assembly.GetType(className);
                     return Activator.CreateInstance(moodAnalyseType);
                 }
-                catch (MoodAnalyserCustomException)
+                catch (ArgumentNullException)
                 {
                     throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_CLASS,"Class Name not found");
                 }
