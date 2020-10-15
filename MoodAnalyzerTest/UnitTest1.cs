@@ -58,8 +58,6 @@ namespace MoodAnalyzerTest
             Assert.AreEqual("Sad Mood", actual);
         }
 
-
-
         //TC4.1
         [TestMethod]
         public void GivenMoodAnalyserClassNameShouldReturn_MoodAnalyserObject_TC4_1()
@@ -118,8 +116,8 @@ namespace MoodAnalyzerTest
         public void GivenMoodAnalyserClassNameShouldReturn_MoodAnalyserObject_UsingParameterizedConstructor_TC5_1()
         {
             MoodAnalyser expected = new MoodAnalyser("Happy");
-            object actual = MoodAnalyserFactory.CreateMoodAnalyser_ParameterizedConstructor("MoodAnalyzer.MoodAnalyser","MoodAnalyser","Happy");
-            expected.Equals(actual);
+            object actual = MoodAnalyserFactory.CreateMoodAnalyser_ParameterizedConstructor("MoodAnalyzer.MoodAnalyser", "MoodAnalyser", "Happy");
+            expected.GetType().Equals(actual.GetType());
         }
 
         //TC5.2 Improper Class name
@@ -162,6 +160,38 @@ namespace MoodAnalyzerTest
             finally
             {
                 expected.Equals(actual);
+            }
+        }
+
+
+        //TC6.1
+        [TestMethod]
+        public void TestingMethodsCalledThroughReflection_6_1()
+        {             
+            object expected = "Happy Mood";
+            object actual = MoodAnalyserFactory.InvokeAnalyseMethod("AnalyseMood", "I am in Happy Mood");
+            Assert.AreEqual(expected, actual);            
+        }
+
+
+        //TC6.2 Improper Method Name
+        [TestMethod]
+        public void TestingMethodsCalledThroughReflection_6_2()
+        {
+            object actual = null;
+            object expected = null;
+            try
+            {
+                expected = "Happy Mood";
+                actual = MoodAnalyserFactory.InvokeAnalyseMethod("Analyse","I am in Happy Mood");                
+            }
+            catch (MoodAnalyserCustomException e)
+            {
+                actual = e.Message;
+            }
+            finally
+            {
+                Assert.AreEqual(expected,actual);
             }
         }
     }

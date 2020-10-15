@@ -34,15 +34,16 @@ namespace MoodAnalyzer
         }
 
 
+
         //UC5
         public static object CreateMoodAnalyser_ParameterizedConstructor(string className, string constructor, string message)
         {
             Type type = Type.GetType("MoodAnalyzer.MoodAnalyser");
-            if(type.FullName.Equals(className) || type.Name.Equals(className))
+            if (type.FullName.Equals(className) || type.Name.Equals(className))
             {
                 if (type.Name.Equals(constructor))
                 {
-                    ConstructorInfo constructorInfo = type.GetConstructor(new [] { typeof(string) });
+                    ConstructorInfo constructorInfo = type.GetConstructor(new[] { typeof(string) });
                     object instance = constructorInfo.Invoke(new object[] { message });
                     return instance;
                 }
@@ -57,5 +58,23 @@ namespace MoodAnalyzer
             }
 
         }
+
+        //UC6
+        public static string InvokeAnalyseMethod(string methodName, string message)
+        {
+            try
+            {
+                Type type = Type.GetType("MoodAnalyzer.MoodAnalyser");
+                object moodAnalyser = MoodAnalyserFactory.CreateMoodAnalyser_ParameterizedConstructor("MoodAnalyzer.MoodAnalyser", "MoodAnalyser", message);
+                MethodInfo methodInfo = type.GetMethod(methodName);
+                object method = methodInfo.Invoke(moodAnalyser, null);
+                return method.ToString();
+            }
+            catch (NullReferenceException)
+            {
+                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NO_SUCH_METHOD,"Method Not Found");
+            }
+        }
+
     }
 }
