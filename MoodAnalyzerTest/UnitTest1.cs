@@ -58,40 +58,42 @@ namespace MoodAnalyzerTest
             Assert.AreEqual("Sad Mood", actual);
         }
 
-        //TC4
+
+
+        //TC4.1
         [TestMethod]
-        public void GivenMoodAnalyserClassNameShouldReturn_MoodAnalyserObject_TC4()
+        public void GivenMoodAnalyserClassNameShouldReturn_MoodAnalyserObject_TC4_1()
         {
             MoodAnalyser expected = new MoodAnalyser();
-            object actual = MoodAnalyserFactory.CreateMoodAnalyser("MoodAnalyzer.MoodAnalyser","MoodAnalyser");
+            object actual = MoodAnalyserFactory.CreateMoodAnalyser("MoodAnalyzer.MoodAnalyser", "MoodAnalyser");
             expected.Equals(actual);
         }
 
-        //TC4.1 Improper class name
+        //TC4.2 Improper class name
         [TestMethod]
-        public void GivenMoodAnalyserClassNameShouldReturn_MoodAnalyserObject_TC_4_1()
+        public void GivenMoodAnalyserClassNameShouldReturn_MoodAnalyserObject_TC_4_2()
         {
-            object expected=null;
-            object actual =null;
+            object expected = null;
+            object actual = null;
             try
             {
                 expected = new MoodAnalyser();
-                actual = MoodAnalyserFactory.CreateMoodAnalyser("ModAnalyzer.MoodAnalyser", "MoodAnalyser");                
+                actual = MoodAnalyserFactory.CreateMoodAnalyser("ModAnalyzer.MoodAnalyser", "MoodAnalyser");
             }
             catch (MoodAnalyserCustomException m)
             {
-                Console.WriteLine(m.Message);           
+                Console.WriteLine(m.Message);
             }
             finally
             {
                 expected.Equals(actual);
             }
-            
+
         }
 
-        //TC4.2 Improper constructor name
+        //TC4.3 Improper constructor name
         [TestMethod]
-        public void GivenMoodAnalyserClassNameShouldReturn_MoodAnalyserObject_TC_4_2()
+        public void GivenMoodAnalyserClassNameShouldReturn_MoodAnalyserObject_TC_4_3()
         {
             object expected = null;
             object actual = null;
@@ -111,5 +113,56 @@ namespace MoodAnalyzerTest
 
         }
 
+        //TC5.1
+        [TestMethod]
+        public void GivenMoodAnalyserClassNameShouldReturn_MoodAnalyserObject_UsingParameterizedConstructor_TC5_1()
+        {
+            MoodAnalyser expected = new MoodAnalyser("Happy");
+            object actual = MoodAnalyserFactory.CreateMoodAnalyser_ParameterizedConstructor("MoodAnalyzer.MoodAnalyser","MoodAnalyser","Happy");
+            expected.Equals(actual);
+        }
+
+        //TC5.2 Improper Class name
+        [TestMethod]
+        public void GivenMoodAnalyserClassNameShouldReturn_MoodAnalyserObject_UsingParameterizedConstructor_TC5_2()
+        {
+            object expected = null;
+            object actual = null;
+            try
+            {
+                expected = new MoodAnalyser("Happy");
+                actual = MoodAnalyserFactory.CreateMoodAnalyser_ParameterizedConstructor("ModAnalyzer.MoodAnalyser", "MoodAnalyser", "Happy");
+            }
+            catch (MoodAnalyserCustomException m)
+            {
+                Console.WriteLine(m.Message);
+            }
+            finally
+            {
+                expected.Equals(actual);
+            }
+        }
+
+
+        //TC5.3 Improper Constructor name
+        [TestMethod]
+        public void GivenMoodAnalyserClassNameShouldReturn_MoodAnalyserObject_UsingParameterizedConstructor_TC5_3()
+        {
+            object expected = null;
+            object actual = null;
+            try
+            {
+                expected = new MoodAnalyser("Happy");
+                actual = MoodAnalyserFactory.CreateMoodAnalyser_ParameterizedConstructor("MoodAnalyzer.MoodAnalyser", "MdAnalyser", "Happy");
+            }
+            catch (MoodAnalyserCustomException m)
+            {
+                Console.WriteLine(m.Message);
+            }
+            finally
+            {
+                expected.Equals(actual);
+            }
+        }
     }
 }
