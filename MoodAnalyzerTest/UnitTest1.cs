@@ -117,7 +117,7 @@ namespace MoodAnalyzerTest
         {
             MoodAnalyser expected = new MoodAnalyser("Happy");
             object actual = MoodAnalyserFactory.CreateMoodAnalyser_ParameterizedConstructor("MoodAnalyzer.MoodAnalyser", "MoodAnalyser", "Happy");
-            expected.Equals(actual);
+            expected.GetType().Equals(actual.GetType()); //follow this line to compare two objects
         }
 
         //TC5.2 Improper Class name
