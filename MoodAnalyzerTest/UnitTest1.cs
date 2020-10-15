@@ -117,7 +117,7 @@ namespace MoodAnalyzerTest
         {
             MoodAnalyser expected = new MoodAnalyser("Happy");
             object actual = MoodAnalyserFactory.CreateMoodAnalyser_ParameterizedConstructor("MoodAnalyzer.MoodAnalyser", "MoodAnalyser", "Happy");
-            expected.GetType().Equals(actual.GetType());
+            expected.GetType().Equals(actual.GetType()); //follow this line to compare two objects
         }
 
         //TC5.2 Improper Class name
@@ -167,10 +167,10 @@ namespace MoodAnalyzerTest
         //TC6.1
         [TestMethod]
         public void TestingMethodsCalledThroughReflection_6_1()
-        {             
+        {
             object expected = "Happy Mood";
             object actual = MoodAnalyserFactory.InvokeAnalyseMethod("AnalyseMood", "I am in Happy Mood");
-            Assert.AreEqual(expected, actual);            
+            Assert.AreEqual(expected, actual);
         }
 
 
@@ -183,7 +183,7 @@ namespace MoodAnalyzerTest
             try
             {
                 expected = "Happy Mood";
-                actual = MoodAnalyserFactory.InvokeAnalyseMethod("Analyse","I am in Happy Mood");                
+                actual = MoodAnalyserFactory.InvokeAnalyseMethod("Analyse", "I am in Happy Mood");
             }
             catch (MoodAnalyserCustomException e)
             {
@@ -191,8 +191,63 @@ namespace MoodAnalyzerTest
             }
             finally
             {
+                Assert.AreEqual(expected, actual);
+            }
+        }
+
+
+        //TC7.1
+        [TestMethod]
+        public void TestingReflectionToChangeMoodMessageDynamically_TC7_1()
+        {
+            string expected = "Happy";
+
+            string actual = MoodAnalyserFactory.SetField("message", "Happy");
+
+            Assert.AreEqual(expected, actual);
+            
+        }
+
+
+        //TC7.2 Improper Field Name
+        [TestMethod]
+        public void TestingReflectionToChangeMoodMessageDynamically_TC7_2()
+        {
+            string expected = "Happy";
+            string actual = "";
+            try
+            {
+                actual = MoodAnalyserFactory.SetField("msg","Happy");
+            }
+            catch(MoodAnalyserCustomException m)
+            {
+                actual = m.Message;
+            }
+            finally
+            {
                 Assert.AreEqual(expected,actual);
             }
         }
+
+        //TC7.3 Null Message Passed 
+        [TestMethod]
+        public void TestingReflectionToChangeMoodMessageDynamically_TC7_3()
+        {
+            string expected = "Happy";
+            string actual = "";
+            try
+            {
+                actual = MoodAnalyserFactory.SetField("message", null);
+            }
+            catch (MoodAnalyserCustomException m)
+            {
+                actual = m.Message;
+            }
+            finally
+            {
+                Assert.AreEqual(expected, actual);
+            }
+        }
+
     }
 }
